@@ -42,37 +42,21 @@ internal class LCDFragmentTest {
 
     @Test
     fun pauseViewLifecycleCompositeDisposable() {
-        testView(TestFragment::viewPauseDisposables)
+        test(TestFragment::viewPauseDisposables)
     }
 
     @Test
     fun stopViewLifecycleCompositeDisposable() {
-        testView(TestFragment::viewStopDisposables)
+        test(TestFragment::viewStopDisposables)
     }
 
     @Test
     fun destroyViewLifecycleCompositeDisposable() {
-        testView(TestFragment::viewDisposables)
+        test(TestFragment::viewDisposables)
     }
 
     private fun test(block: (TestFragment) -> LifecycleCompositeDisposable) {
         val scenario = launchFragment<TestFragment>()
-
-        scenario.onFragment { fragment ->
-            block(fragment).add(disposable)
-            assertEquals(1, block(fragment).size)
-            assertFalse(disposable.isDisposed)
-        }
-
-        scenario.moveToState(Lifecycle.State.DESTROYED)
-
-        assertTrue(disposable.isDisposed)
-    }
-
-    private fun testView(block: (TestFragment) -> LifecycleCompositeDisposable) {
-        val scenario = launchFragmentInContainer<TestFragment>()
-
-        scenario.moveToState(Lifecycle.State.RESUMED)
 
         scenario.onFragment { fragment ->
             block(fragment).add(disposable)
