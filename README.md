@@ -1,4 +1,4 @@
-# LCD <LifecycleCompositeDisposable>
+# LCD > LifecycleCompositeDisposable
 
 [![version](https://img.shields.io/github/v/tag/floschu/LifecycleCompositeDisposable?color=blue&label=version)](https://bintray.com/floschu/lifecyclecompositedisposable) [![build](https://github.com/floschu/LifecycleCompositeDisposable/workflows/build/badge.svg)](https://github.com/floschu/LifecycleCompositeDisposable/actions) [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
@@ -18,9 +18,9 @@ dependencies {
 
 ## Concept
 
-The `LifecycleCompositeDisposable` is an RxJava2 `CompositeDisposable` that clears its `Disposable`'s on a specific lifecycle event.
+A `LifecycleCompositeDisposable` is a RxJava2 `CompositeDisposable` that clears its `Disposable`'s on a specific lifecycle event.
 
-The extension functions for `Activity`, `Fragment`, `LifecycleOwner` and `Application` already have default values for when to clear but can be adjusted accordingly.
+This library contains extension functions for `LifecycleOwner` (-> meaning also `FragmentActivity` and `Fragment`) to lazily create such a `LifecycleCompositeDisposable`.
 
 ### Activity
 
