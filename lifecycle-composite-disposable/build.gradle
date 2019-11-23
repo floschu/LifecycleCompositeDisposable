@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion rootProject.ext.buildConfig.compileSdkVersion
+    defaultConfig {
+        targetSdkVersion rootProject.ext.buildConfig.targetSdkVersion
+        minSdkVersion rootProject.ext.buildConfig.minSdkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError true
+    }
+}
+
+dependencies {
+    api(Libs.kotlin_stdlib)
+    api(Libs.lifecycle_extensions)
+    api(Libs.rxjava)
+}
+
+//apply from: rootProject.file("gradle/deploy.gradle")

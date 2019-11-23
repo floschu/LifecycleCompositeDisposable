@@ -1,0 +1,53 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion rootProject.ext.buildConfig.compileSdkVersion
+
+    defaultConfig {
+        versionCode 1
+        versionName '1.0.0'
+        applicationId "com.florianschuster.lifecyclecompositedisposable.test.app"
+        targetSdkVersion rootProject.ext.buildConfig.targetSdkVersion
+        minSdkVersion rootProject.ext.buildConfig.minSdkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError true
+    }
+}
+
+dependencies {
+    implementation(project(path: ":lifecycle-composite-disposable"))
+
+    implementation(Libs.appcompat)
+
+    debugImplementation(Libs.junit_ktx)
+    debugImplementation(Libs.core_ktx)
+    debugImplementation(Libs.androidx_test_runner)
+    debugImplementation(Libs.androidx_test_rules)
+    debugImplementation(Libs.kotlin_test)
+    debugImplementation(Libs.fragment_testing)
+}

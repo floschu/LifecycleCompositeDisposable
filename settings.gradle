@@ -1,0 +1,1 @@
+include ':lifecycle-composite-disposable', 'test-app'

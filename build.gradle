@@ -1,0 +1,35 @@
+apply plugin: 'com.github.ben-manes.versions'
+
+buildscript {
+    ext.buildConfig = [
+            targetSdkVersion : 29,
+            minSdkVersion    : 19,
+            compileSdkVersion: 29
+    ]
+
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        classpath(Libs.com_android_tools_build_gradle)
+        classpath(Libs.kotlin_gradle_plugin)
+        classpath(Libs.de_fayard_refreshversions_gradle_plugin)
+        classpath(Libs.ktlint_gradle)
+        classpath('com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4')
+
+    }
+}
+
+apply plugin: "de.fayard.refreshVersions"
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+apply plugin: 'com.jfrog.bintray'
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
