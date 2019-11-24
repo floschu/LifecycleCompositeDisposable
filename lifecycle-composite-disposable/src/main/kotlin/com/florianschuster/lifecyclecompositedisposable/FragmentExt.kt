@@ -2,7 +2,6 @@ package com.florianschuster.lifecyclecompositedisposable
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 
 /**
  * Lazily creates a [LifecycleCompositeDisposable] that calls [LifecycleCompositeDisposable.clear]

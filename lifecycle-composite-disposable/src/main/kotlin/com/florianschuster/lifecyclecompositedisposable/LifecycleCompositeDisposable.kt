@@ -1,6 +1,9 @@
 package com.florianschuster.lifecyclecompositedisposable
 
-import androidx.lifecycle.*
+import android.util.Log
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.disposables.DisposableContainer
@@ -20,9 +23,15 @@ class LifecycleCompositeDisposable(
     private val composite: CompositeDisposable = CompositeDisposable()
 ) : Disposable by composite, DisposableContainer by composite, LifecycleEventObserver {
 
+    var tag: String = this::class.java.simpleName
+
     init {
         if (lifecycle.currentState >= Lifecycle.State.INITIALIZED) {
             lifecycle.addObserver(this)
+        } else {
+            "Cannot observe $lifecycle because it is not Lifecycle.State.INITIALIZED.".let {
+                Log.w(tag, it)
+            }
         }
     }
 
