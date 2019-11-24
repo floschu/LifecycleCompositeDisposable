@@ -34,11 +34,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val timer = Observable.timer(1, TimeUnit.SECONDS).share()
+        val interval = Observable.interval(1, TimeUnit.SECONDS).share()
 
-        timer.subscribe().addTo(disposables) // will dispose in onDestroy
-        timer.subscribe().addTo(stopDisposables) // will dispose in onStop
-        timer.subscribe().addTo(pauseDisposables) // will dispose in onPause
+        interval.subscribe().addTo(disposables) // will dispose in onDestroy
+        interval.subscribe().addTo(stopDisposables) // will dispose in onStop
+        interval.subscribe().addTo(pauseDisposables) // will dispose in onPause
     }
 }
 ```
@@ -53,10 +53,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        val timer = Observable.timer(1, TimeUnit.SECONDS).share()
+        val interval = Observable.interval(1, TimeUnit.SECONDS).share()
         
-        timer.subscribe().addTo(disposables) // will dispose in onDestroy
-        timer.subscribe().addTo(viewDisposables) // will dispose in onDestroyView
+        interval.subscribe().addTo(disposables) // will dispose in onDestroy
+        interval.subscribe().addTo(viewDisposables) // will dispose in onDestroyView
     }
 }
 ```
