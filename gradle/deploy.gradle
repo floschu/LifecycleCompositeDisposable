@@ -49,6 +49,8 @@ project.afterEvaluate {
                         artifact project.tasks.findByName("bundle${variant.name.capitalize()}Aar")
                         artifact androidJavadocsJar
                         artifact androidSourcesJar
+
+                        decoratePom(pom)
                     }
                 }
             } else {
@@ -56,9 +58,9 @@ project.afterEvaluate {
                     artifact jar
                     artifact sourcesJar
                     artifact javadocJar
-                }
 
-                decoratePom(pom)
+                    decoratePom(pom)
+                }
             }
         }
 
