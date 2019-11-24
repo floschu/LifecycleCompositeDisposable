@@ -30,10 +30,62 @@ bintray {
     }
 }
 
-apply from: "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle"
+// until https://github.com/sky-uk/gradle-maven-plugin/issues/24 is fixed
+//apply from: "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle"
 
-// override from sky-uk plugin to correctly package sources
-task sourcesJar(type: Jar, overwrite: true) {
-    from sourceSets.main.allSource
-    archiveClassifier.set("sources")
+apply plugin: 'maven-publish'
+
+def gradlePluginVersion = project.hasProperty('mavPluginVersion') ? project.mavPluginVersion : 'master'
+apply from: "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/${gradlePluginVersion}/utils.gradle"
+apply from: "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/${gradlePluginVersion}/artifact-javadoc-handler.gradle"
+apply from: "https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/${gradlePluginVersion}/artifact-pom-manager.gradle"
+
+project.afterEvaluate {
+    publishing {
+        publications {
+            if (isAndroidProject()) {
+                android.libraryVariants.all { variant ->
+                    "maven${variant.name.capitalize()}Publish"(MavenPublication) {
+                        artifact project.tasks.findByName("bundle${variant.name.capitalize()}Aar")
+                        artifact androidJavadocsJar
+                        artifact androidSourcesJar
+                    }
+                }
+            } else {
+                mavenPublish(MavenPublication) {
+                    artifact jar
+                    artifact sourcesJar
+                    artifact javadocJar
+                }
+
+                decoratePom(pom)
+            }
+        }
+
+        repositories {
+            def isToRemoteRepo = getBooleanProperty("mavPublishToRemoteRepo")
+            def isToInternalRepo = getBooleanProperty("mavPublishToInternalRepo")
+            def isToMavenLocal = getBooleanProperty("mavPublishToMavenLocal")
+
+            if (isToRemoteRepo) {
+                maven {
+                    credentials {
+                        username getStringProperty("mavRemoteRepoUser")
+                        password getStringProperty("mavRemoteRepoPassword")
+                    }
+                    url = getStringProperty("mavRepoRemoteUrl")
+                }
+            }
+
+            if (isToInternalRepo) {
+                maven {
+                    url = getStringProperty("mavRepoInternalUrl")
+                }
+            }
+
+            if (isToMavenLocal || (!isToInternalRepo && !isToRemoteRepo)) {
+                mavenLocal()
+            }
+        }
+    }
 }

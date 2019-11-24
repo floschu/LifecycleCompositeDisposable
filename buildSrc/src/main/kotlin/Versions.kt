@@ -14,7 +14,7 @@ object Versions {
 
     const val androidx_test: String = "1.2.0"
 
-    const val com_android_tools_build_gradle: String =  "3.5.2"
+    const val com_android_tools_build_gradle: String = "3.5.2"
 
     const val de_fayard_refreshversions_gradle_plugin: String = "0.7.0" // available: "0.8.4"
 
@@ -26,7 +26,7 @@ object Versions {
 
     const val ktlint_gradle: String = "9.1.0" // available: "9.1.1"
 
-    const val lint_gradle: String = "26.5.1" // available: "26.5.2"
+    const val lint_gradle: String = "26.5.2"
 
     const val appcompat: String = "1.1.0"
 
@@ -36,7 +36,7 @@ object Versions {
 
     const val rxjava: String = "2.2.14"
 
-    const val aapt2: String = "3.5.1-5435860" // available: "3.5.2-5435860"
+    const val aapt2: String = "3.5.2-5435860"
 
     /**
      * Current version: "5.6.4"
