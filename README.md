@@ -1,6 +1,6 @@
 # LCD > LifecycleCompositeDisposable
 
-[![version](https://img.shields.io/github/v/tag/floschu/LifecycleCompositeDisposable?color=blue&label=version)](https://bintray.com/floschu/lifecyclecompositedisposable) [![build](https://github.com/floschu/LifecycleCompositeDisposable/workflows/build/badge.svg)](https://github.com/floschu/LifecycleCompositeDisposable/actions) [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![version](https://img.shields.io/github/v/tag/floschu/LifecycleCompositeDisposable?color=blue&label=version)](https://bintray.com/flosch/lifecyclecompositedisposable) [![build](https://github.com/floschu/LifecycleCompositeDisposable/workflows/build/badge.svg)](https://github.com/floschu/LifecycleCompositeDisposable/actions) [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
 A lifecycle aware RxJava2 CompositeDisposable
 
@@ -59,6 +59,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         interval.subscribe().addTo(viewDisposables) // will dispose in onDestroyView
     }
 }
+```
+
+### Manual Creation
+
+``` kotlin
+val disposables = LifecycleCompositeDisposable(lifecycle, Lifecycle.Event.ON_DESTROY)
+Observable.interval(1, TimeUnit.SECONDS).subscribe().addTo(disposables)
 ```
 
 ## author
