@@ -1,7 +1,6 @@
 package com.florianschuster.lifecyclecompositedisposable.test.app
 
 import androidx.fragment.app.testing.launchFragment
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.florianschuster.lifecyclecompositedisposable.LifecycleCompositeDisposable
@@ -27,35 +26,35 @@ internal class LCDFragmentTest {
 
     @Test
     fun pauseLifecycleCompositeDisposable() {
-        test(TestFragment::pauseDisposables)
+        testLifecycle(TestFragment::pauseDisposables)
     }
 
     @Test
     fun stopLifecycleCompositeDisposable() {
-        test(TestFragment::stopDisposables)
+        testLifecycle(TestFragment::stopDisposables)
     }
 
     @Test
     fun destroyLifecycleCompositeDisposable() {
-        test(TestFragment::disposables)
+        testLifecycle(TestFragment::disposables)
     }
 
     @Test
     fun pauseViewLifecycleCompositeDisposable() {
-        test(TestFragment::viewPauseDisposables)
+        testLifecycle(TestFragment::viewPauseDisposables)
     }
 
     @Test
     fun stopViewLifecycleCompositeDisposable() {
-        test(TestFragment::viewStopDisposables)
+        testLifecycle(TestFragment::viewStopDisposables)
     }
 
     @Test
     fun destroyViewLifecycleCompositeDisposable() {
-        test(TestFragment::viewDisposables)
+        testLifecycle(TestFragment::viewDisposables)
     }
 
-    private fun test(block: (TestFragment) -> LifecycleCompositeDisposable) {
+    private fun testLifecycle(block: (TestFragment) -> LifecycleCompositeDisposable) {
         val scenario = launchFragment<TestFragment>()
 
         scenario.onFragment { fragment ->

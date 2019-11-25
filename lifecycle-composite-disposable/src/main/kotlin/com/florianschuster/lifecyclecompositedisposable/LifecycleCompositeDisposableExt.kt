@@ -1,16 +1,17 @@
 package com.florianschuster.lifecyclecompositedisposable
 
 import io.reactivex.disposables.Disposable
+import io.reactivex.internal.disposables.DisposableContainer
 
 /**
- * [LifecycleCompositeDisposable] += observable.subscribe()
+ * [DisposableContainer] += observable.subscribe()
  */
-operator fun LifecycleCompositeDisposable.plusAssign(disposable: Disposable) {
+operator fun DisposableContainer.plusAssign(disposable: Disposable) {
     add(disposable)
 }
 
 /**
- * Add the disposable to a [LifecycleCompositeDisposable].
+ * Add the disposable to a [DisposableContainer].
  */
-fun Disposable.addTo(lifecycleCompositeDisposable: LifecycleCompositeDisposable): Disposable =
-    apply { lifecycleCompositeDisposable.add(this) }
+fun Disposable.addTo(container: DisposableContainer): Disposable =
+    apply { container.add(this) }

@@ -18,7 +18,7 @@ dependencies {
 
 ## Concept
 
-A `LifecycleCompositeDisposable` is a RxJava2 `CompositeDisposable` that clears its `Disposable`'s on a specific lifecycle event.
+A `LifecycleCompositeDisposable` is a RxJava2 `CompositeDisposable` that disposes its `Disposable`'s on a specific lifecycle event.
 
 This library contains extension functions for `LifecycleOwner` (-> meaning also `FragmentActivity` and `Fragment`) to lazily create such a `LifecycleCompositeDisposable`.
 
@@ -57,6 +57,23 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         
         interval.subscribe().addTo(disposables) // will dispose in onDestroy
         interval.subscribe().addTo(viewDisposables) // will dispose in onDestroyView
+    }
+}
+```
+
+### View
+
+``` kotlin
+class TestView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
+    private val disposables by viewDisposables()
+    
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        Observable.interval(1, TimeUnit.SECONDS).subscribe().addTo(disposables) // will dispose in onDetachedFromWindow
     }
 }
 ```

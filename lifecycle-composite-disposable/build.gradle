@@ -8,7 +8,6 @@ android {
         minSdkVersion rootProject.ext.buildConfig.minSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }

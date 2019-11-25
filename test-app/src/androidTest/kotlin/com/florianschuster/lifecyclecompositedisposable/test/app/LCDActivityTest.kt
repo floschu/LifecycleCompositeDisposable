@@ -1,6 +1,7 @@
 package com.florianschuster.lifecyclecompositedisposable.test.app
 
 import androidx.lifecycle.Lifecycle
+import androidx.test.core.app.launchActivity
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.florianschuster.lifecyclecompositedisposable.LifecycleCompositeDisposable
@@ -18,9 +19,6 @@ import kotlin.test.assertTrue
 @RunWith(AndroidJUnit4::class)
 internal class LCDActivityTest {
 
-    @get:Rule
-    val activityRule = activityScenarioRule<TestActivity>()
-
     private lateinit var disposable: Disposable
 
     @Before
@@ -30,27 +28,29 @@ internal class LCDActivityTest {
 
     @Test
     fun pauseLifecycleCompositeDisposable() {
-        test(TestActivity::pauseDisposables)
+        testLifecycle(TestActivity::pauseDisposables)
     }
 
     @Test
     fun stopLifecycleCompositeDisposable() {
-        test(TestActivity::stopDisposables)
+        testLifecycle(TestActivity::stopDisposables)
     }
 
     @Test
     fun destroyLifecycleCompositeDisposable() {
-        test(TestActivity::disposables)
+        testLifecycle(TestActivity::disposables)
     }
 
-    private fun test(block: (TestActivity) -> LifecycleCompositeDisposable) {
-        activityRule.scenario.onActivity { activity ->
+    private fun testLifecycle(block: (TestActivity) -> LifecycleCompositeDisposable) {
+        val scenario = launchActivity<TestActivity>()
+
+        scenario.onActivity { activity ->
             block(activity).add(disposable)
             assertEquals(1, block(activity).size)
             assertFalse(disposable.isDisposed)
         }
 
-        activityRule.scenario.moveToState(Lifecycle.State.DESTROYED)
+        scenario.moveToState(Lifecycle.State.DESTROYED)
 
         assertTrue(disposable.isDisposed)
     }
